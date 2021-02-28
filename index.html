@@ -69,7 +69,7 @@ g.call(d3.axisBottom(x)
 
 var promises = [
   d3.json("https://raw.githubusercontent.com/jtrosalez/hpi/main/maps/caTracts.json"),
-  d3.csv("https://raw.githubusercontent.com/jtrosalez/hpi/main/csv/tracts.csv", function(d) { hpi.set(d.id, +d.pctile); })
+  d3.csv("https://raw.githubusercontent.com/jtrosalez/hpi/main/csv/tracts.csv", function(d) { tracts.set(d.id, +d.pctile); })
 ]
 
 Promise.all(promises).then(ready)
