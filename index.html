@@ -1,11 +1,7 @@
 <meta charset="utf-8">
 <style>
 
-.counties {
-  fill: none;
-}
-
-.states {
+.tracts {
   fill: none;
   stroke: #fff;
   stroke-linejoin: round;
@@ -84,11 +80,6 @@ function ready([ca]) {
       .attr("d", path)
     .append("title")
       .text(function(d) { return d.pctile; });
-
-  svg.append("path")
-      .datum(topojson.mesh(ca, ca.objects.tracts, function(a, b) { return a !== b; }))
-      .attr("class", "tracts")
-      .attr("d", path);
 }
 
 </script>
