@@ -49,7 +49,7 @@ d3.json("https://raw.githubusercontent.com/jtrosalez/hpi/main/maps/caTracts.json
 
   svg.append("path")
       .attr("class", "tract-border")
-      .datum(topojson.mesh(ny, tracts, function(a, b) { return a !== b; }))
+      .datum(topojson.mesh(caTracts, tracts, function(a, b) { return a !== b; }))
       .attr("d", path);
 });
 
