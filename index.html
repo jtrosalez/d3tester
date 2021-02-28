@@ -23,12 +23,12 @@ var hpi = d3.map();
 var path = d3.geoPath();
 
 var x = d3.scaleLinear()
-    .domain([1, 10])
+    .domain([0, 100])
     .rangeRound([600, 860]);
 
 var color = d3.scaleThreshold()
-    .domain(d3.range(2, 10))
-    .range(d3.schemeBlues[9]);
+    .domain(d3.range(0, 100))
+    .range(d3.schemeBlues[5]);
 
 var g = svg.append("g")
     .attr("class", "key")
@@ -58,7 +58,7 @@ g.append("text")
 
 g.call(d3.axisBottom(x)
     .tickSize(13)
-    .tickFormat(function(x, i) { return i ? x : x + "%"; })
+    .tickFormat(function(x, i) { return i ? x : x; })
     .tickValues(color.domain()))
   .select(".domain")
     .remove();
