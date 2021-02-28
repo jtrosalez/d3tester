@@ -22,7 +22,7 @@ var svg = d3.select("svg"),
     width = +svg.attr("width"),
     height = +svg.attr("height");
 
-var unemployment = d3.map();
+var hpi = d3.map();
 
 var path = d3.geoPath();
 
@@ -69,7 +69,7 @@ g.call(d3.axisBottom(x)
 
 var promises = [
   d3.json("https://raw.githubusercontent.com/jtrosalez/hpi/main/maps/caTracts.json"),
-  d3.csv("https://raw.githubusercontent.com/jtrosalez/hpi/main/csv/tracts.csv", function(d) { tracts.set(d.id, +d.pctile); })
+  d3.csv("https://raw.githubusercontent.com/jtrosalez/hpi/main/csv/tracts.csv", function(d) { hpi.set(d.id, +d.pctile); })
 ]
 
 Promise.all(promises).then(ready)
@@ -80,7 +80,7 @@ function ready([ca]) {
     .selectAll("path")
     .data(topojson.feature(ca, ca.objects.tracts).features)
     .enter().append("path")
-      .attr("fill", function(d) { return color(d.pctile = unemployment.get(d.id)); })
+      .attr("fill", function(d) { return color(d.pctile = hpi.get(d.id)); })
       .attr("d", path)
     .append("title")
       .text(function(d) { return d.pctile; });
