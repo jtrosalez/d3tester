@@ -58,7 +58,7 @@ g.append("text")
     .attr("fill", "#000")
     .attr("text-anchor", "start")
     .attr("font-weight", "bold")
-    .text("Unemployment rate");
+    .text("HPI Score");
 
 g.call(d3.axisBottom(x)
     .tickSize(13)
@@ -68,26 +68,26 @@ g.call(d3.axisBottom(x)
     .remove();
 
 var promises = [
-  d3.json("https://d3js.org/us-10m.v1.json"),
-  d3.tsv("unemployment.tsv", function(d) { unemployment.set(d.id, +d.rate); })
+  d3.json("https://raw.githubusercontent.com/jtrosalez/hpi/main/maps/caTracts.json"),
+  d3.csv("https://raw.githubusercontent.com/jtrosalez/hpi/main/csv/tracts.csv", function(d) { hpi.set(d.id, +d.pctile); })
 ]
 
 Promise.all(promises).then(ready)
 
-function ready([us]) {
+function ready([ca]) {
   svg.append("g")
-      .attr("class", "counties")
+      .attr("class", "tracts")
     .selectAll("path")
-    .data(topojson.feature(us, us.objects.counties).features)
+    .data(topojson.feature(ca, ca.objects.tracts).features)
     .enter().append("path")
-      .attr("fill", function(d) { return color(d.rate = unemployment.get(d.id)); })
+      .attr("fill", function(d) { return color(d.pctile = unemployment.get(d.id)); })
       .attr("d", path)
     .append("title")
-      .text(function(d) { return d.rate + "%"; });
+      .text(function(d) { return d.pctile; });
 
   svg.append("path")
-      .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
-      .attr("class", "states")
+      .datum(topojson.mesh(ca, ca.objects.tracts, function(a, b) { return a !== b; }))
+      .attr("class", "tracts")
       .attr("d", path);
 }
 
